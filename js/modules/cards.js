@@ -1,3 +1,5 @@
+import { getResource } from '../services/services';
+
 function cards() {
     // ИСПОЛЬЗУЕМ КЛАССЫ ДЛЯ КАРТОЧЕК
     class MenuCard {
@@ -9,12 +11,16 @@ function cards() {
             this.price = price;
             this.classes = classes;
             this.parent = document.querySelector(parentSelector);
-            this.transfer = 3.20;
+            this.transfer = 3.2;
             this.changeToBYN();
         }
         
         changeToBYN() {
+            console.log('incoming price = ' + this.price);
+            console.log('incoming transfer = ' + this.transfer);
+            console.log(+this.price * this.transfer);
             this.price = +this.price * this.transfer;
+            console.log('-  ' + this.price);
         }
         render() {
             const element = document.createElement('div');
@@ -36,15 +42,7 @@ function cards() {
             `;
             this.parent.append(element);			
         }
-    }
-
-    const getResource = async (url, data) => {
-        const res = await fetch(url);
-        if (!res.ok) {
-            throw new Error(`Couldn't fetch ${url}, status: ${res.status}`);
-        }
-        return await res.json();
-    };
+    }    
 
     getResource('http://localhost:3000/menu')
         .then(data => {
@@ -53,4 +51,4 @@ function cards() {
             });
         });	
 }
-module.exports = cards;
+export default cards;
